@@ -91,7 +91,23 @@ function parseTweets(runkeeper_tweets) {
 		miscellaneousPctElements[i].innerText = miscellaneousPct;
 	}
 
+	// sort a copy of the tweets from oldest to newest
+	var sortedTweets = tweet_array.slice().sort(function(a, b) {
+		return a.time - b.time;
+	});
+	var earliestTweet = sortedTweets[0].time;
+	var latestTweet = sortedTweets[sortedTweets.length - 1].time;
+
+	// format like "Sunday, September 23, 2018" and put them on the page
+	var dateFormat = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+
+	document.getElementById('firstDate').innerText = earliestTweet.toLocaleDateString(undefined, dateFormat);
+	document.getElementById('lastDate').innerText = latestTweet.toLocaleDateString('en-US', dateFormat);
+	// 	document.getElementById('numberTweets').innerText = tweet_array.length;	
+
+
 }
+
 
 //Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function (event) {
