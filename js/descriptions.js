@@ -25,7 +25,7 @@ function addEventHandlerForSearch() {
 		document.getElementById('searchText').innerText = "";
 		document.getElementById('searchCount').innerText = 0;
 
-	// 'input' runs every time a letter is typed OR deleted
+	// 'input' runs every time a letter is typed or deleted
 	searchBox.addEventListener('input', function() {
 		var query = searchBox.value;
 
