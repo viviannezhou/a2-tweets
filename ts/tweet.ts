@@ -53,15 +53,50 @@ class Tweet {
         if (this.source != 'completed_event') {
             return "unknown";
         }
-        //TODO: parse the activity type from the text of the tweet
-        return "";
+        // parse the activity type from the text of the tweet
+        var words = this.text.split(" ");
+        var unit = words[4];
+
+        // if words[4] is a unit, the activity starts after it; otherwise, the activity starts at words[3]
+        var start = 3;
+        if (unit == "km" || unit == "mi") {
+            start = 5;
+        }
+
+        // collect words until we reach "with", "-", "in", a link, or an extra space
+        var activityWords = [];
+        for (var i = start; i < words.length; i++) {
+            if (words[i] == "with" || words[i] == "-" || words[i] == "in" || words[i].startsWith("https://") || words[i] == "") {
+                break;
+            }
+            activityWords.push(words[i]);
+        }
+        
+        // join the activity words back together with spaces, and return it
+        return activityWords.join(" ");
+    
     }
 
     get distance():number {
         if(this.source != 'completed_event') {
             return 0;
         }
-        //TODO: prase the distance from the text of the tweet
+        // parse the distance from the text of the tweet
+        var words = this.text.split(" ");
+        var unit = words[4];
+
+        // miles: turn the text into a number
+        if (unit == "mi") {
+            return parseFloat(words[3]);
+        }
+
+        // kilometers: turn it into a number, and convert it to miles
+        if (unit == "km") {
+            return parseFloat(words[3]) * 0.621371;
+        }
+
+
+        // no distance found (like spinning or yoga), return 0 
         return 0;
     }
 
