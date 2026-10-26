@@ -66,19 +66,17 @@ class Tweet {
     }
 
     getHTMLTableRow(rowNumber:number):string {
-        // find the link: it starts at "https://" and ends at the next space
-        var linkStart = this.text.indexOf("https://");
-        var linkEnd = this.text.indexOf(" ", linkStart);
-        if (linkEnd == -1) {
-            linkEnd = this.text.length; // link is at the very end of the tweet
+        // split the tweet into words, and turn every link into a clickable one
+        var words = this.text.split(" ");
+        for (var i = 0; i < words.length; i++) {
+            if (words[i].startsWith("https://")) {
+                words[i] = '<a href="' + words[i] + '" target="_blank">' + words[i] + '</a>';
+            }
         }
-        var link = this.text.substring(linkStart, linkEnd);
+        // glue the words back together with spaces
+        var tweetWithLink = words.join(" ");
 
-        // swap the plain link for a clickable one that opens in a new tab
-        var clickableLink = "<a href='" + link + "' target='_blank'>" + link + "</a>";
-        var tweetWithLink = this.text.replace(link, clickableLink);
-
-        //TODO: return one table row with 3 cells
+        // return one table row with 3 cells
         return "<tr><td>" + rowNumber + "</td><td>" + this.activityType + "</td><td>" + tweetWithLink + "</td></tr>";
     }
 }
