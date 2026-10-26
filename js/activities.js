@@ -9,7 +9,6 @@ function parseTweets(runkeeper_tweets) {
 		return new Tweet(tweet.text, tweet.created_at);
 	});
 
-
 	// only completed tweets have an activity type, so filter to just those
 	var completedTweets = tweet_array.filter(function(tweet) {
 		return tweet.source == "completed_event";
@@ -96,7 +95,6 @@ function parseTweets(runkeeper_tweets) {
 	};
 	vegaEmbed('#distanceVis', distance_vis_spec, {actions: false});
 
-
 	// chart 3: the means
 	var distance_agg_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -138,10 +136,9 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('longestActivityType').innerText = longestActivityType;
 	document.getElementById('shortestActivityType').innerText = shortestActivityType;
 	document.getElementById('weekdayOrWeekendLonger').innerText = weekdayOrWeekendLonger;
-
 }
 
-//Wait for the DOM to load
+// wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function (event) {
 	loadSavedRunkeeperTweets().then(parseTweets);
 });

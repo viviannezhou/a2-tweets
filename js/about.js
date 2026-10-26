@@ -13,7 +13,6 @@ function parseTweets(runkeeper_tweets) {
 	//It works correctly, your task is to update the text of the other tags in the HTML file!
 	document.getElementById('numberTweets').innerText = tweet_array.length;	
 
-
 	// count how many tweets are completed events
 	var completedEvents = tweet_array.filter(function(tweet) {
 		return tweet.source == "completed_event";
@@ -58,7 +57,6 @@ function parseTweets(runkeeper_tweets) {
 		miscellaneousElements[i].innerText = miscellaneous;
 	}
 
-
 	// completed events as a percent of all tweets, with 2 decimals
 	var completedPct = math.format(completedEvents / tweet_array.length * 100, {notation: 'fixed', precision: 2}) + '%';
 	var completedPctElements = document.getElementsByClassName('completedEventsPct');
@@ -101,14 +99,13 @@ function parseTweets(runkeeper_tweets) {
 	// format like "Sunday, September 23, 2018" and put them on the page
 	var dateFormat = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
-	document.getElementById('firstDate').innerText = earliestTweet.toLocaleDateString(undefined, dateFormat);
+	document.getElementById('firstDate').innerText = earliestTweet.toLocaleDateString('en-US', dateFormat);
 	document.getElementById('lastDate').innerText = latestTweet.toLocaleDateString('en-US', dateFormat);
 
 	// completed tweets that include user-written text
 	var written = tweet_array.filter(function(tweet) {
 		return tweet.source == "completed_event" && tweet.written;
 	}).length;
-
 
 	// put written count in every span with the class "written"
 	var writtenElements = document.getElementsByClassName('written');
@@ -124,7 +121,6 @@ function parseTweets(runkeeper_tweets) {
 		writtenPctElements[i].innerText = writtenPct;
 	}
 }
-
 
 //Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', function (event) {

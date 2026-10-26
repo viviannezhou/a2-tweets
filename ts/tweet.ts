@@ -30,11 +30,10 @@ class Tweet {
 
     //returns a boolean, whether the text includes any content written by the person tweeting.
     get written():boolean {
-        // user texts comes after " - ", but TomTom watch text is added automatically, so it doesn't count
-        return (this.text.includes(" - ")) && !this.text.includes("TomTom MySports Watch");
+        // user text comes after " - ", but TomTom watch text is added automatically, so it doesn't count
+        return this.text.includes(" - ") && !this.text.includes("TomTom MySports Watch");
     }
         
-
     get writtenText():string {
         if(!this.written) {
             return "";
@@ -74,7 +73,6 @@ class Tweet {
         
         // join the activity words back together with spaces, and return it
         return activityWords.join(" ");
-    
     }
 
     get distance():number {
@@ -94,7 +92,6 @@ class Tweet {
         if (unit == "km") {
             return parseFloat(words[3]) * 0.621371;
         }
-
 
         // no distance found (like spinning or yoga), return 0 
         return 0;
