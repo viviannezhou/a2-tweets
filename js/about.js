@@ -103,9 +103,26 @@ function parseTweets(runkeeper_tweets) {
 
 	document.getElementById('firstDate').innerText = earliestTweet.toLocaleDateString(undefined, dateFormat);
 	document.getElementById('lastDate').innerText = latestTweet.toLocaleDateString('en-US', dateFormat);
-	// 	document.getElementById('numberTweets').innerText = tweet_array.length;	
+
+	// completed tweets that include user-written text
+	var written = tweet_array.filter(function(tweet) {
+		return tweet.source == "completed_event" && tweet.written;
+	}).length;
 
 
+	// put written count in every span with the class "written"
+	var writtenElements = document.getElementsByClassName('written');
+	for (var i = 0; i < writtenElements.length; i++) {
+		writtenElements[i].innerText = written;
+	}
+
+	// written tweets as a percent of completed tweets (not all tweets), with 2 decimals
+	var writtenPct = math.format(written / completedEvents * 100, {notation: 'fixed', precision: 2}) + '%';
+	var writtenPctElements = document.getElementsByClassName('writtenPct');
+	
+	for (var i = 0; i < writtenPctElements.length; i++) {
+		writtenPctElements[i].innerText = writtenPct;
+	}
 }
 
 

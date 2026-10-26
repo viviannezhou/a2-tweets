@@ -30,16 +30,23 @@ class Tweet {
 
     //returns a boolean, whether the text includes any content written by the person tweeting.
     get written():boolean {
-        //TODO: identify whether the tweet is written
-        return false;
+        // user texts comes after " - ", but TomTom watch text is added automatically, so it doesn't count
+        return (this.text.includes(" - ")) && !this.text.includes("TomTom MySports Watch");
     }
+        
 
     get writtenText():string {
         if(!this.written) {
             return "";
         }
-        //TODO: parse the written text from the tweet
-        return "";
+        // find where the user's text starts (right after " - ")
+        var start = this.text.indexOf(" - ") + 3;
+
+        // find where the user's text ends (right before the first URL)
+        var end = this.text.indexOf("https://");
+
+        // cut out the text between the start and end, and return it
+        return this.text.substring(start, end).trim();
     }
 
     get activityType():string {
@@ -59,7 +66,19 @@ class Tweet {
     }
 
     getHTMLTableRow(rowNumber:number):string {
-        //TODO: return a table row which summarizes the tweet with a clickable link to the RunKeeper activity
-        return "<tr></tr>";
+        // find the link: it starts at "https://" and ends at the next space
+        var linkStart = this.text.indexOf("https://");
+        var linkEnd = this.text.indexOf(" ", linkStart);
+        if (linkEnd == -1) {
+            linkEnd = this.text.length; // link is at the very end of the tweet
+        }
+        var link = this.text.substring(linkStart, linkEnd);
+
+        // swap the plain link for a clickable one that opens in a new tab
+        var clickableLink = "<a href='" + link + "' target='_blank'>" + link + "</a>";
+        var tweetWithLink = this.text.replace(link, clickableLink);
+
+        //TODO: return one table row with 3 cells
+        return "<tr><td>" + rowNumber + "</td><td>" + this.activityType + "</td><td>" + tweetWithLink + "</td></tr>";
     }
 }
