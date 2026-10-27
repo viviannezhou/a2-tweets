@@ -48,6 +48,40 @@ class Tweet {
         return this.text.substring(start, end).trim();
     }
 
+    // returns "positive", "negative", or "neutral" based on the sentiment of the written text
+    get sentiment():string {
+        // only look at what the person wrote, in lowercase so "Great" matches "great"
+        var text = this.writtenText.toLowerCase();
+
+        var positiveWords = ["great", "good", "awesome", "perfect", "enjoy", "proud", "happy", "nice", "best", "fantastic", "amazing", "love", "pb", "beautiful", "lovely", "gorgeous", "glad", "super", "!"];
+        var negativeWords = ["bad", "terrible", "tired", "awful", "horrible", "hate", "disappointed", "sad", "worst", "injury", "tough", "brutal", "pain", "hurt", "sore", "slow", "struggle", "exhausted", "sick", "humid", "heavy", "rough"]; 
+
+        // count how many positive words show up
+        var positiveCount = 0;
+        for (var i = 0; i < positiveWords.length; i++) {
+            if (text.includes(positiveWords[i])) {
+                positiveCount++;
+            }
+        }
+
+        // count how many negative words show up
+        var negativeCount = 0;
+        for (var i = 0; i < negativeWords.length; i++) {
+            if (text.includes(negativeWords[i])) {
+                negativeCount++;
+            }
+        }
+
+        // return the sentiment based on which count is higher
+        if (positiveCount > negativeCount) {
+            return "positive";
+        } else if (negativeCount > positiveCount) {
+            return "negative";
+        } else {
+            return "neutral";
+        }
+    }
+
     get activityType():string {
         if (this.source != 'completed_event') {
             return "unknown";
@@ -109,6 +143,6 @@ class Tweet {
         var tweetWithLink = words.join(" ");
 
         // return one table row with 3 cells
-        return "<tr><td>" + rowNumber + "</td><td>" + this.activityType + "</td><td>" + tweetWithLink + "</td></tr>";
+        return "<tr><td>" + rowNumber + "</td><td>" + this.activityType + "</td><td>" + tweetWithLink + "</td><td>" + this.sentiment + "</td></tr>" ;
     }
 }

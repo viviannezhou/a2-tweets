@@ -27,4 +27,5 @@ None
 
 5. Is there anything special we need to know in order to run your code?
 
-Nothing special. Run tsc --p tsconfig.json to generate js/tweet.js, then open index.html with a live server. On the search page, searching ignores capitalization, and every link in a tweet is clickable. I did not add any bonus features.
+- Nothing special. Run tsc --p tsconfig.json to generate js/tweet.js, then open index.html with a live server. On the search page, searching ignores capitalization, and every link in a tweet is clickable.
+- Bonus: I added a Sentiment column to the search table on the descriptions page. Each tweet is labeled positive, negative, or neutral by counting how many positive and negative words appear in the written text. It’s simple word matching, so it doesn’t catch things like “not bad”.
